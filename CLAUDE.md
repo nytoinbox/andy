@@ -7,6 +7,7 @@ Developer notes for the portfolio site of Anakpong Achotipong ("Andy"), a sushi 
 - Static site: plain HTML, CSS and vanilla JS. No framework, no build step, no npm dependencies.
 - Dark theme with animations; bilingual English / Thai.
 - The owner speaks Thai. Reply to them in Thai; keep code, comments and commit messages in English.
+- **Do not push to GitHub without the owner's explicit permission for that push.** Make and test changes locally, report them, and wait for approval.
 
 ## Structure
 
