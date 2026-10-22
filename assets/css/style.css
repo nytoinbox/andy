@@ -806,6 +806,38 @@ a.contact-row:hover { color: var(--red-soft); transform: translateX(6px); }
 .contact-form .btn { justify-self: start; }
 .form-note { margin: -8px 0 0; font-size: 13px; color: var(--muted); }
 .form-error { margin: 0; color: var(--red-soft); font-size: 14px; min-height: 1em; }
+.form-error a { color: var(--gold); text-decoration: underline; }
+.contact-form { position: relative; }
+.contact-form .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.contact-form.sending .btn { opacity: 0.6; pointer-events: none; }
+.form-success {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 32px;
+  text-align: center;
+  background: var(--card);
+  border-radius: inherit;
+  animation: fadeIn 0.6s ease forwards;
+  opacity: 0;
+}
+.form-success[hidden] { display: none; }
+.form-success p { margin: 0; font-size: 18px; max-width: 320px; }
+.form-success-icon {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  color: var(--gold);
+  font-size: 28px;
+  animation: zoomIn 0.6s var(--ease);
+}
 
 /* ---------- Footer ---------- */
 .footer {

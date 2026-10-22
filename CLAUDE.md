@@ -67,7 +67,10 @@ Strip EXIF metadata from new photos (re-save with Pillow) so no GPS data is publ
 
 ## Behaviour notes
 
-- Contact form is `mailto:`, so it opens the visitor's email app; there is no backend. Swap to a form service (e.g. Formspree) if the owner wants messages delivered directly.
+- Contact form posts JSON to FormSubmit (`https://formsubmit.co/ajax/chinyaandy@gmail.com`, `FORM_ENDPOINT` in `main.js`), which emails the owner; visitor's address is set as reply-to. Free, no account.
+  - The first submission triggers an activation email to that inbox; nothing is delivered until the owner clicks the link.
+  - Hidden `_honey` field filters bots. On failure the form shows the email address as a fallback.
+  - After activation FormSubmit offers a random alias to replace the address in the endpoint, if the owner wants it hidden from page source.
 - `prefers-reduced-motion` disables the loader, particles, cursor effects and most transitions.
 - Custom cursor / magnetic buttons / tilt only run on fine pointers (not touch).
 
@@ -83,4 +86,4 @@ No test suite. Before pushing:
 ## Deployment
 
 - Hosted with GitHub Pages from branch `claude/portfolio-site`, folder `/ (root)`; URL `https://nytoinbox.github.io/andy/`. Pages on a free account needs the repo to be public.
-- A private preview is also published as a claude.ai Artifact (download and mailto links do not work there).
+- A preview is also published as a claude.ai Artifact (downloads, mailto links and the contact form may not work there).

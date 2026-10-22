@@ -42,7 +42,10 @@
       "contact.lead": "Planning an event or looking for a sushi chef? Send a message — I’ll get back to you soon.",
       "form.name": "Your name", "form.email": "Email", "form.event": "Event type & date (optional)",
       "form.message": "Message", "form.send": "Send Message",
-      "form.note": "Opens your email app with the message ready to send.",
+      "form.note": "Your message goes straight to the chef’s inbox.",
+      "form.sending": "Sending…",
+      "form.success": "Thank you! Your message has been sent. I’ll get back to you soon.",
+      "form.fail": "Sorry, the message couldn’t be sent. Please email ",
       "form.error": "Please fill in your name, a valid email and a message.",
       "form.subject": "Sushi chef inquiry from ",
       "form.eventLabel": "Event: ",
@@ -82,7 +85,10 @@
       "contact.lead": "กำลังวางแผนจัดงาน หรือมองหาเชฟซูชิอยู่ใช่ไหม? ส่งข้อความมาได้เลย แล้วจะติดต่อกลับโดยเร็ว",
       "form.name": "ชื่อของคุณ", "form.email": "อีเมล", "form.event": "ประเภทงานและวันที่ (ไม่บังคับ)",
       "form.message": "ข้อความ", "form.send": "ส่งข้อความ",
-      "form.note": "ระบบจะเปิดแอปอีเมลของคุณพร้อมข้อความที่กรอกไว้",
+      "form.note": "ข้อความจะส่งตรงถึงอีเมลของเชฟ",
+      "form.sending": "กำลังส่ง…",
+      "form.success": "ขอบคุณครับ! ส่งข้อความเรียบร้อยแล้ว จะติดต่อกลับโดยเร็ว",
+      "form.fail": "ขออภัย ส่งข้อความไม่สำเร็จ กรุณาส่งอีเมลมาที่ ",
       "form.error": "กรุณากรอกชื่อ อีเมลที่ถูกต้อง และข้อความ",
       "form.subject": "สอบถามงานเชฟซูชิจาก ",
       "form.eventLabel": "งาน: ",
@@ -519,8 +525,12 @@
     if (e.key === "ArrowRight") show(idx + 1);
   });
 
-  /* ---------------- Contact form (mailto) ---------------- */
-  var form = $(".contact-form"), err = $(".form-error");
+  /* ---------------- Contact form (FormSubmit.co) ----------------
+     Posts to FormSubmit, which emails the owner. The very first submission sends an
+     activation email to the inbox below; messages are delivered once it is confirmed. */
+  var FORM_ENDPOINT = "https://formsubmit.co/ajax/chinyaandy@gmail.com";
+  var form = $(".contact-form"), err = $(".form-error"), success = $(".form-success");
+  var sendBtn = $("button[type=submit] span", form);
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     var name = form.name.value.trim(), email = form.email.value.trim();
@@ -533,10 +543,42 @@
     });
     if (!ok) { err.textContent = i18n[lang]["form.error"]; return; }
     err.textContent = "";
+    if (form._honey.value) return; // bot filled the hidden field
     var dict = i18n[lang];
-    var body = msg + "\n\n" + (event ? dict["form.eventLabel"] + event + "\n" : "") + "— " + name + " (" + email + ")";
-    window.location.href = "mailto:chinyaandy@gmail.com?subject=" +
-      encodeURIComponent(dict["form.subject"] + name) + "&body=" + encodeURIComponent(body);
+    form.classList.add("sending");
+    sendBtn.textContent = dict["form.sending"];
+
+    fetch(FORM_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        event: event || "-",
+        message: msg,
+        _replyto: email,
+        _subject: dict["form.subject"] + name,
+        _template: "table"
+      })
+    }).then(function (res) {
+      return res.json().then(function (data) {
+        if (!res.ok || String(data.success) !== "true") throw new Error(data.message || res.status);
+      });
+    }).then(function () {
+      form.reset();
+      success.hidden = false;
+      success.setAttribute("tabindex", "-1");
+      success.focus();
+    }).catch(function () {
+      err.textContent = dict["form.fail"];
+      var a = document.createElement("a");
+      a.href = "mailto:chinyaandy@gmail.com";
+      a.textContent = "chinyaandy@gmail.com";
+      err.appendChild(a);
+    }).then(function () {
+      form.classList.remove("sending");
+      sendBtn.textContent = dict["form.send"];
+    });
   });
 
   $(".year").textContent = new Date().getFullYear();

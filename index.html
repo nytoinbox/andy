@@ -262,6 +262,7 @@
           </a>
         </div>
         <form class="contact-form reveal-up" novalidate>
+          <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
           <div class="field">
             <input id="f-name" name="name" type="text" required placeholder=" " autocomplete="name">
             <label for="f-name" data-i18n="form.name">Your name</label>
@@ -279,8 +280,12 @@
             <label for="f-msg" data-i18n="form.message">Message</label>
           </div>
           <button type="submit" class="btn btn-primary magnetic"><span data-i18n="form.send">Send Message</span></button>
-          <p class="form-note" data-i18n="form.note">Opens your email app with the message ready to send.</p>
+          <p class="form-note" data-i18n="form.note">Your message goes straight to the chef’s inbox.</p>
           <p class="form-error" role="alert"></p>
+          <div class="form-success" role="status" hidden>
+            <span class="form-success-icon" aria-hidden="true">✓</span>
+            <p data-i18n="form.success">Thank you! Your message has been sent. I’ll get back to you soon.</p>
+          </div>
         </form>
       </div>
     </section>
