@@ -807,6 +807,7 @@ a.contact-row:hover { color: var(--red-soft); transform: translateX(6px); }
 .form-note { margin: -8px 0 0; font-size: 13px; color: var(--muted); }
 .form-error { margin: 0; color: var(--red-soft); font-size: 14px; min-height: 1em; }
 .form-error a { color: var(--gold); text-decoration: underline; }
+.form-reason { display: block; margin-top: 6px; color: var(--muted); font-size: 12px; }
 .contact-form { position: relative; }
 .contact-form .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 .contact-form.sending .btn { opacity: 0.6; pointer-events: none; }

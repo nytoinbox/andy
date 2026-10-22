@@ -573,12 +573,18 @@
       success.hidden = false;
       success.setAttribute("tabindex", "-1");
       success.focus();
-    }).catch(function () {
+    }).catch(function (e) {
       err.textContent = dict["form.fail"];
       var a = document.createElement("a");
       a.href = "mailto:chinyaandy@gmail.com";
       a.textContent = "chinyaandy@gmail.com";
       err.appendChild(a);
+      // show the service's reason so problems can be diagnosed from a screenshot
+      var why = document.createElement("small");
+      why.className = "form-reason";
+      why.textContent = (e && e.message) || "Unknown error";
+      err.appendChild(why);
+      if (window.console) console.error("FormSubmit:", e);
     }).then(function () {
       form.classList.remove("sending");
       sendBtn.textContent = dict["form.send"];
