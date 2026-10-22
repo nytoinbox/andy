@@ -350,7 +350,8 @@ html[lang="th"] .hero-role { font-family: var(--sans); font-style: normal; font-
   box-shadow: 0 40px 80px -30px rgba(200, 16, 46, 0.45);
 }
 .loaded .photo-frame { clip-path: inset(0 0 0 0); }
-.photo-frame img {
+.photo-frame img,
+.photo-frame canvas {
   width: 100%;
   height: 112%;
   object-fit: cover;
@@ -358,7 +359,35 @@ html[lang="th"] .hero-role { font-family: var(--sans); font-style: normal; font-
   transform: scale(1.15);
   transition: transform 2s var(--ease) 0.5s;
 }
-.loaded .photo-frame img { transform: scale(1); }
+.loaded .photo-frame img, .loaded .photo-frame canvas { transform: scale(1); }
+/* Spatial Scene: WebGL depth-parallax canvas drawn over the photo */
+.photo-frame canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  opacity: 0;
+  transition: transform 2s var(--ease) 0.5s, opacity 0.8s ease;
+}
+.photo-frame.spatial-on canvas { opacity: 1; }
+.motion-btn {
+  position: absolute;
+  top: 18%;
+  right: -14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: rgba(19, 17, 15, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(212, 166, 86, 0.45);
+  border-radius: 999px;
+  color: var(--gold);
+  font: 500 13px var(--sans);
+  cursor: pointer;
+  transform: translateZ(40px);
+}
+.motion-btn[hidden] { display: none; }
 .photo-frame::after {
   content: "";
   position: absolute;

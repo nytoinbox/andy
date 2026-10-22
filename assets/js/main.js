@@ -14,7 +14,7 @@
       "hero.badge": "Available for private events & catering",
       "hero.roles": ["Sushi Chef", "Knife Artisan", "Private Event Chef", "Menu Developer"],
       "hero.sub": "Traditional technique, fresh ingredients, and a steady hand — crafted in West Palm Beach, Florida.",
-      "hero.cta1": "Book the Chef", "hero.cta2": "Download Resume", "hero.tag": "Sushi Chef",
+      "hero.cta1": "Book the Chef", "hero.cta2": "Download Resume", "hero.tag": "Sushi Chef", "hero.motion": "Tap for 3D",
       "about.title": "Professional Summary",
       "about.text": "Dynamic Sushi Chef with extensive experience at Peppermint Thai and Sushi, specializing in sushi preparation and quality control. Proven ability to enhance menu offerings and maintain food safety compliance. Adept in inventory management and fostering collaboration within kitchen teams to elevate service efficiency and customer satisfaction.",
       "stats.years": "Years as a sushi chef", "stats.kitchens": "Restaurants & resorts", "stats.skills": "Core kitchen skills",
@@ -54,7 +54,7 @@
       "hero.badge": "รับงานเชฟส่วนตัวและจัดเลี้ยง",
       "hero.roles": ["เชฟซูชิ", "ช่างฝีมือมีด", "เชฟงานส่วนตัว", "นักพัฒนาเมนู"],
       "hero.sub": "เทคนิคดั้งเดิม วัตถุดิบสด และมือที่มั่นคง — จากเวสต์ปาล์มบีช ฟลอริดา",
-      "hero.cta1": "จองเชฟ", "hero.cta2": "ดาวน์โหลดเรซูเม่", "hero.tag": "เชฟซูชิ",
+      "hero.cta1": "จองเชฟ", "hero.cta2": "ดาวน์โหลดเรซูเม่", "hero.tag": "เชฟซูชิ", "hero.motion": "แตะเพื่อดู 3 มิติ",
       "about.title": "สรุปประวัติ",
       "about.text": "เชฟซูชิผู้มีพลังและประสบการณ์ยาวนานจาก Peppermint Thai and Sushi เชี่ยวชาญด้านการเตรียมซูชิและการควบคุมคุณภาพ มีผลงานในการพัฒนาเมนูและรักษามาตรฐานความปลอดภัยด้านอาหาร ชำนาญการบริหารวัตถุดิบ และส่งเสริมการทำงานเป็นทีมในครัว เพื่อยกระดับประสิทธิภาพการบริการและความพึงพอใจของลูกค้า",
       "stats.years": "ปีในฐานะเชฟซูชิ", "stats.kitchens": "ร้านอาหารและรีสอร์ต", "stats.skills": "ทักษะหลักในครัว",
@@ -213,7 +213,7 @@
   var nav = $(".nav"), progress = $(".progress"), fill = $(".timeline-fill"), timeline = $(".timeline");
   var sections = $$("main section[id]");
   var links = $$(".nav-links a");
-  var heroPhoto = $(".hero-photo img");
+  var heroLayers = $$(".photo-frame img, .photo-frame canvas");
   var ticking = false;
 
   function onScroll() {
@@ -227,7 +227,7 @@
     fill.style.transform = "scaleY(" + Math.max(0, Math.min(1, p)) + ")";
 
     if (!reduceMotion && y < vh && document.body.classList.contains("loaded")) {
-      heroPhoto.style.transform = "translateY(" + (y * -0.08) + "px)";
+      heroLayers.forEach(function (el) { el.style.transform = "translateY(" + (y * -0.08) + "px)"; });
     }
 
     var current = "";
@@ -298,6 +298,162 @@
       });
     });
   }
+
+  /* ---------------- Spatial Scene (depth-map parallax on the hero photo) ----------------
+     assets/img/chef-depth.png is a depth map (white = near) generated with Depth Anything V2.
+     A fragment shader shifts each pixel by its depth, driven by the mouse, device tilt,
+     or a slow idle sway, so the chef and the sushi board separate from the background. */
+  (function spatialScene() {
+    var frame = $(".photo-frame"), canvas = $("canvas.spatial", frame), motionBtn = $(".motion-btn");
+    if (reduceMotion || !canvas) return;
+    var gl = canvas.getContext("webgl", { alpha: false, antialias: false, premultipliedAlpha: false });
+    if (!gl) return;
+
+    var VERT = "attribute vec2 a;varying vec2 v;void main(){v=vec2(a.x*.5+.5,.5-a.y*.5);gl_Position=vec4(a,0.,1.);}";
+    var FRAG = [
+      "precision mediump float;",
+      "varying vec2 v;",
+      "uniform sampler2D uImg, uDepth;",
+      "uniform vec2 uPointer;",
+      "uniform float uCanvasAspect, uImgAspect, uStrength, uFocus, uZoom;",
+      "void main(){",
+      // cover-fit, anchored to the top of the image (matches object-position: center top)
+      "  vec2 s = vec2(1.);",
+      "  if (uCanvasAspect > uImgAspect) s.y = uImgAspect / uCanvasAspect; else s.x = uCanvasAspect / uImgAspect;",
+      "  vec2 base = vec2(.5 + (v.x - .5) * s.x, v.y * s.y);",
+      "  vec2 c = vec2(.5, s.y * .5);",
+      "  base = c + (base - c) / uZoom;",
+      "  vec2 off = uPointer * uStrength * vec2(1., uImgAspect);",
+      // fixed-point refinement: sample depth where the pixel lands, not where it started
+      "  vec2 p = base;",
+      "  for (int i = 0; i < 6; i++) { float d = texture2D(uDepth, p).r; p = base + off * (d - uFocus); }",
+      "  gl_FragColor = texture2D(uImg, clamp(p, .001, .999));",
+      "}"
+    ].join("\n");
+
+    function shader(type, src) {
+      var sh = gl.createShader(type);
+      gl.shaderSource(sh, src);
+      gl.compileShader(sh);
+      return gl.getShaderParameter(sh, gl.COMPILE_STATUS) ? sh : null;
+    }
+    var vs = shader(gl.VERTEX_SHADER, VERT), fs = shader(gl.FRAGMENT_SHADER, FRAG);
+    if (!vs || !fs) return;
+    var prog = gl.createProgram();
+    gl.attachShader(prog, vs);
+    gl.attachShader(prog, fs);
+    gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+    gl.useProgram(prog);
+
+    var buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+    var aLoc = gl.getAttribLocation(prog, "a");
+    gl.enableVertexAttribArray(aLoc);
+    gl.vertexAttribPointer(aLoc, 2, gl.FLOAT, false, 0, 0);
+
+    var u = {};
+    ["uImg", "uDepth", "uPointer", "uCanvasAspect", "uImgAspect", "uStrength", "uFocus", "uZoom"].forEach(function (n) {
+      u[n] = gl.getUniformLocation(prog, n);
+    });
+    gl.uniform1i(u.uImg, 0);
+    gl.uniform1i(u.uDepth, 1);
+    gl.uniform1f(u.uStrength, 0.032);
+    gl.uniform1f(u.uFocus, 0.55);
+    gl.uniform1f(u.uZoom, 1.06);
+
+    function texture(unit, img) {
+      var t = gl.createTexture();
+      gl.activeTexture(gl.TEXTURE0 + unit);
+      gl.bindTexture(gl.TEXTURE_2D, t);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+    }
+    function load(src) {
+      return new Promise(function (res, rej) {
+        var im = new Image();
+        im.onload = function () { res(im); };
+        im.onerror = rej;
+        im.src = src;
+      });
+    }
+
+    var target = { x: 0, y: 0 }, cur = { x: 0, y: 0 }, lastInput = -1e9, visible = true, running = false;
+
+    function resize() {
+      var dpr = Math.min(2, window.devicePixelRatio || 1);
+      canvas.width = Math.max(1, Math.round(canvas.clientWidth * dpr));
+      canvas.height = Math.max(1, Math.round(canvas.clientHeight * dpr));
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      gl.uniform1f(u.uCanvasAspect, canvas.width / canvas.height);
+    }
+
+    function frameLoop(t) {
+      if (!visible) { running = false; return; }
+      if (t - lastInput > 2500) {
+        // idle: slow figure-eight sway so the scene feels alive
+        target.x = Math.sin(t / 1700) * 0.45;
+        target.y = Math.cos(t / 2300) * 0.25;
+      }
+      cur.x += (target.x - cur.x) * 0.06;
+      cur.y += (target.y - cur.y) * 0.06;
+      gl.uniform2f(u.uPointer, cur.x, cur.y);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+      requestAnimationFrame(frameLoop);
+    }
+    function start() { if (!running && visible) { running = true; requestAnimationFrame(frameLoop); } }
+
+    Promise.all([load("assets/img/chef.jpg"), load("assets/img/chef-depth.png")]).then(function (ims) {
+      texture(0, ims[0]);
+      texture(1, ims[1]);
+      gl.uniform1f(u.uImgAspect, ims[0].naturalWidth / ims[0].naturalHeight);
+      resize();
+      window.addEventListener("resize", resize);
+      frame.classList.add("spatial-on");
+
+      new IntersectionObserver(function (es) {
+        visible = es[0].isIntersecting && !document.hidden;
+        start();
+      }).observe(frame);
+      document.addEventListener("visibilitychange", function () { visible = !document.hidden; start(); });
+      start();
+    }).catch(function () { /* keep the plain <img> */ });
+
+    var clamp = function (n) { return Math.max(-1, Math.min(1, n)); };
+
+    // desktop: follow the mouse anywhere on the page
+    window.addEventListener("mousemove", function (e) {
+      target.x = clamp(e.clientX / innerWidth * 2 - 1);
+      target.y = clamp(e.clientY / innerHeight * 2 - 1);
+      lastInput = performance.now();
+    });
+
+    // phones: follow device tilt, relative to how the phone was held at first reading
+    var beta0 = null;
+    function onTilt(e) {
+      if (e.gamma == null || e.beta == null) return;
+      if (beta0 === null) beta0 = e.beta;
+      target.x = clamp(e.gamma / 25);
+      target.y = clamp((e.beta - beta0) / 25);
+      lastInput = performance.now();
+    }
+    var DOE = window.DeviceOrientationEvent;
+    if (DOE && typeof DOE.requestPermission === "function") {
+      // iOS asks for permission, which must come from a tap
+      motionBtn.hidden = false;
+      motionBtn.addEventListener("click", function () {
+        DOE.requestPermission().then(function (state) {
+          if (state === "granted") window.addEventListener("deviceorientation", onTilt);
+        }).catch(function () {}).then(function () { motionBtn.hidden = true; });
+      });
+    } else if (DOE) {
+      window.addEventListener("deviceorientation", onTilt);
+    }
+  })();
 
   /* ---------------- Particles (floating embers / petals) ---------------- */
   var canvas = $(".particles");
