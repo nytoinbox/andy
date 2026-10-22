@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Anakpong Achotipong — Sushi Chef</title>
+  <meta name="description" content="Anakpong Achotipong — Sushi Chef in West Palm Beach, Florida. Private sushi chef, event catering and menu development.">
+  <meta property="og:title" content="Anakpong Achotipong — Sushi Chef">
+  <meta property="og:description" content="Sushi Chef in West Palm Beach, FL. Available for private events & catering.">
+  <meta property="og:image" content="assets/img/og.jpg">
+  <meta name="theme-color" content="#0b0a09">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='38' fill='none' stroke='%23c8102e' stroke-width='10' stroke-dasharray='200 40' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=IBM+Plex+Sans+Thai:wght@300;400;500;600&family=Noto+Serif+JP:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="is-loading">
+
+  <!-- Intro loader: ensō brush circle -->
+  <div class="loader" aria-hidden="true">
+    <svg class="enso" viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="80" />
+    </svg>
+    <span class="loader-kanji">鮨</span>
+  </div>
+
+  <div class="cursor" aria-hidden="true"></div>
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <canvas class="particles" aria-hidden="true"></canvas>
+  <div class="progress" aria-hidden="true"></div>
+
+  <header class="nav">
+    <a href="#top" class="nav-logo" aria-label="Home"><span>A</span>A</a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#about" data-i18n="nav.about">About</a>
+      <a href="#skills" data-i18n="nav.skills">Skills</a>
+      <a href="#experience" data-i18n="nav.experience">Experience</a>
+      <a href="#gallery" data-i18n="nav.gallery">Gallery</a>
+      <a href="#services" data-i18n="nav.services">Services</a>
+      <a href="#contact" data-i18n="nav.contact">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="lang-toggle" type="button" aria-label="Switch language">
+        <span data-lang="en">EN</span><span class="sep">/</span><span data-lang="th">TH</span>
+      </button>
+      <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-bg-kanji" aria-hidden="true">寿司職人</div>
+      <div class="hero-text">
+        <p class="eyebrow reveal-up"><span class="pulse"></span><span data-i18n="hero.badge">Available for private events &amp; catering</span></p>
+        <h1 class="hero-name">
+          <span class="line split" data-text="ANAKPONG">ANAKPONG</span>
+          <span class="line split accent" data-text="ACHOTIPONG">ACHOTIPONG</span>
+        </h1>
+        <p class="hero-role reveal-up"><span class="typed" data-i18n-typed="hero.roles"></span><span class="caret">|</span></p>
+        <p class="hero-sub reveal-up" data-i18n="hero.sub">Traditional technique, fresh ingredients, and a steady hand — crafted in West Palm Beach, Florida.</p>
+        <div class="hero-cta reveal-up">
+          <a href="#contact" class="btn btn-primary magnetic"><span data-i18n="hero.cta1">Book the Chef</span></a>
+          <a href="assets/resume/Anakpong-Achotipong-Resume.pdf" class="btn btn-ghost magnetic" download>
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M5 21h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span data-i18n="hero.cta2">Download Resume</span>
+          </a>
+        </div>
+      </div>
+      <div class="hero-photo tilt" data-tilt-max="6">
+        <div class="photo-frame">
+          <img src="assets/img/chef.jpg" alt="Chef Anakpong Achotipong with a platter of sushi" width="848" height="1264">
+        </div>
+        <div class="photo-tag" aria-hidden="true">
+          <span class="jp">職人</span>
+          <span data-i18n="hero.tag">Sushi Chef</span>
+        </div>
+      </div>
+      <a href="#about" class="scroll-cue" aria-label="Scroll down"><span></span></a>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Nigiri</span><i>✦</i><span>Maki</span><i>✦</i><span>Sashimi</span><i>✦</i><span>Omakase</span><i>✦</i><span>寿司</span><i>✦</i><span>Knife Skills</span><i>✦</i><span>Fresh Ingredients</span><i>✦</i>
+        <span>Nigiri</span><i>✦</i><span>Maki</span><i>✦</i><span>Sashimi</span><i>✦</i><span>Omakase</span><i>✦</i><span>寿司</span><i>✦</i><span>Knife Skills</span><i>✦</i><span>Fresh Ingredients</span><i>✦</i>
+      </div>
+    </div>
+
+    <!-- ABOUT -->
+    <section id="about" class="section about">
+      <div class="section-head">
+        <span class="section-num">01</span>
+        <h2 class="section-title reveal-up" data-i18n="about.title">Professional Summary</h2>
+      </div>
+      <div class="about-grid">
+        <p class="about-lead reveal-up" data-i18n="about.text">Dynamic Sushi Chef with extensive experience at Peppermint Thai and Sushi, specializing in sushi preparation and quality control. Proven ability to enhance menu offerings and maintain food safety compliance. Adept in inventory management and fostering collaboration within kitchen teams to elevate service efficiency and customer satisfaction.</p>
+        <div class="stats">
+          <div class="stat reveal-up">
+            <span class="stat-num" data-count="4" data-suffix="+">0</span>
+            <span class="stat-label" data-i18n="stats.years">Years as a sushi chef</span>
+          </div>
+          <div class="stat reveal-up">
+            <span class="stat-num" data-count="3">0</span>
+            <span class="stat-label" data-i18n="stats.kitchens">Restaurants &amp; resorts</span>
+          </div>
+          <div class="stat reveal-up">
+            <span class="stat-num" data-count="6">0</span>
+            <span class="stat-label" data-i18n="stats.skills">Core kitchen skills</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="section skills">
+      <div class="section-head">
+        <span class="section-num">02</span>
+        <h2 class="section-title reveal-up" data-i18n="skills.title">Skills</h2>
+      </div>
+      <div class="skill-grid">
+        <article class="skill-card tilt reveal-up" data-tilt-max="10">
+          <span class="skill-icon">🍣</span><span class="skill-jp">握り</span>
+          <h3 data-i18n="skills.s1">Sushi Preparation</h3>
+          <p data-i18n="skills.s1d">Traditional nigiri, maki and sashimi built on well-seasoned rice and fresh fish.</p>
+        </article>
+        <article class="skill-card tilt reveal-up" data-tilt-max="10">
+          <span class="skill-icon">🔪</span><span class="skill-jp">包丁</span>
+          <h3 data-i18n="skills.s2">Knife Skills</h3>
+          <p data-i18n="skills.s2d">Precise cuts and decorative garnish work that let every ingredient shine.</p>
+        </article>
+        <article class="skill-card tilt reveal-up" data-tilt-max="10">
+          <span class="skill-icon">🧼</span><span class="skill-jp">衛生</span>
+          <h3 data-i18n="skills.s3">Food Safety Compliance</h3>
+          <p data-i18n="skills.s3d">Clean, organized workstations that meet health standards every service.</p>
+        </article>
+        <article class="skill-card tilt reveal-up" data-tilt-max="10">
+          <span class="skill-icon">📦</span><span class="skill-jp">在庫</span>
+          <h3 data-i18n="skills.s4">Inventory Management</h3>
+          <p data-i18n="skills.s4d">Monitoring stock levels so essential ingredients and supplies are always ready.</p>
+        </article>
+        <article class="skill-card tilt reveal-up" data-tilt-max="10">
+          <span class="skill-icon">✅</span><span class="skill-jp">品質</span>
+          <h3 data-i18n="skills.s5">Quality Control</h3>
+          <p data-i18n="skills.s5d">Consistent taste and presentation, from the first plate to the last.</p>
+        </article>
+        <article class="skill-card tilt reveal-up" data-tilt-max="10">
+          <span class="skill-icon">📜</span><span class="skill-jp">献立</span>
+          <h3 data-i18n="skills.s6">Menu Development</h3>
+          <p data-i18n="skills.s6d">Creating and refining menu offerings that keep guests coming back.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience" class="section experience">
+      <div class="section-head">
+        <span class="section-num">03</span>
+        <h2 class="section-title reveal-up" data-i18n="exp.title">Work History</h2>
+      </div>
+      <div class="timeline">
+        <div class="timeline-line"><span class="timeline-fill"></span></div>
+
+        <article class="job reveal-up">
+          <span class="job-dot"></span>
+          <div class="job-date">10/2023 — 06/2024</div>
+          <h3 class="job-title" data-i18n="exp.role">Sushi Chef</h3>
+          <p class="job-place"><strong>Tideline Resort</strong> · Lake Worth, FL</p>
+        </article>
+
+        <article class="job reveal-up">
+          <span class="job-dot"></span>
+          <div class="job-date">10/2022 — 08/2023</div>
+          <h3 class="job-title" data-i18n="exp.role">Sushi Chef</h3>
+          <p class="job-place"><strong>Thai 2 Express</strong> · Lake Worth, FL</p>
+        </article>
+
+        <article class="job reveal-up">
+          <span class="job-dot"></span>
+          <div class="job-date">01/2020 — 09/2022</div>
+          <h3 class="job-title" data-i18n="exp.role">Sushi Chef</h3>
+          <p class="job-place"><strong>Peppermint Thai and Sushi</strong> · Royal Palm Beach, FL</p>
+          <ul class="job-list">
+            <li data-i18n="exp.b1">Prepared high-quality sushi using traditional techniques and fresh ingredients.</li>
+            <li data-i18n="exp.b2">Maintained cleanliness and organization of workstations to ensure compliance with health standards.</li>
+            <li data-i18n="exp.b3">Collaborated with kitchen staff to streamline food preparation processes and improve service efficiency.</li>
+            <li data-i18n="exp.b4">Monitored inventory levels, ensuring timely replenishment of essential sushi ingredients and supplies.</li>
+          </ul>
+        </article>
+
+        <article class="job job-edu reveal-up">
+          <span class="job-dot"></span>
+          <div class="job-date" data-i18n="edu.label">Education</div>
+          <h3 class="job-title" data-i18n="edu.degree">Bachelor of Arts — School of Humanities</h3>
+          <p class="job-place"><strong>University of the Thai Chamber of Commerce</strong> · Bangkok, Thailand</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section id="gallery" class="section gallery">
+      <div class="section-head">
+        <span class="section-num">04</span>
+        <h2 class="section-title reveal-up" data-i18n="gallery.title">Gallery</h2>
+      </div>
+      <div class="gallery-grid">
+        <figure class="g-item g-wide reveal-up"><img src="assets/img/board.jpg" alt="Full sushi board" loading="lazy"><figcaption data-i18n="gallery.c1">The full board</figcaption></figure>
+        <figure class="g-item g-tall reveal-up"><img src="assets/img/sake.jpg" alt="Sake bottles on the counter" loading="lazy"><figcaption data-i18n="gallery.c2">At the counter</figcaption></figure>
+        <figure class="g-item reveal-up"><img src="assets/img/salmon-roll.jpg" alt="Salmon roll and sashimi" loading="lazy"><figcaption data-i18n="gallery.c3">Salmon roll &amp; sashimi</figcaption></figure>
+        <figure class="g-item reveal-up"><img src="assets/img/rainbow-roll.jpg" alt="Tuna and avocado rolls" loading="lazy"><figcaption data-i18n="gallery.c4">Tuna &amp; avocado rolls</figcaption></figure>
+        <figure class="g-item reveal-up"><img src="assets/img/garnish.jpg" alt="Carved vegetable garnish" loading="lazy"><figcaption data-i18n="gallery.c5">Hand-carved garnish</figcaption></figure>
+        <figure class="g-item g-wide reveal-up"><img src="assets/img/nigiri.jpg" alt="Tuna and yellowtail nigiri with ginger" loading="lazy"><figcaption data-i18n="gallery.c6">Nigiri &amp; pickled ginger</figcaption></figure>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="section services">
+      <div class="section-head">
+        <span class="section-num">05</span>
+        <h2 class="section-title reveal-up" data-i18n="services.title">Freelance &amp; Catering</h2>
+      </div>
+      <div class="service-list">
+        <a href="#contact" class="service reveal-up">
+          <span class="service-num">i</span>
+          <div><h3 data-i18n="services.s1">Private Sushi Chef</h3><p data-i18n="services.s1d">An in-home or on-site sushi experience for dinners and celebrations.</p></div>
+          <span class="service-arrow">→</span>
+        </a>
+        <a href="#contact" class="service reveal-up">
+          <span class="service-num">ii</span>
+          <div><h3 data-i18n="services.s2">Event Catering &amp; Platters</h3><p data-i18n="services.s2d">Sushi platters and live stations for parties, weddings and corporate events.</p></div>
+          <span class="service-arrow">→</span>
+        </a>
+        <a href="#contact" class="service reveal-up">
+          <span class="service-num">iii</span>
+          <div><h3 data-i18n="services.s3">Menu Development</h3><p data-i18n="services.s3d">Help building or refreshing a sushi menu for restaurants and kitchens.</p></div>
+          <span class="service-arrow">→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section contact">
+      <div class="section-head">
+        <span class="section-num">06</span>
+        <h2 class="section-title reveal-up" data-i18n="contact.title">Let’s Work Together</h2>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info reveal-up">
+          <p class="contact-lead" data-i18n="contact.lead">Planning an event or looking for a sushi chef? Send a message — I’ll get back to you soon.</p>
+          <a class="contact-row" href="mailto:chinyaandy@gmail.com">
+            <span class="ci">✉</span><span>chinyaandy@gmail.com</span>
+          </a>
+          <div class="contact-row">
+            <span class="ci">⌖</span><span>West Palm Beach, FL</span>
+          </div>
+          <a href="assets/resume/Anakpong-Achotipong-Resume.pdf" class="btn btn-ghost magnetic" download>
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M5 21h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span data-i18n="hero.cta2">Download Resume</span>
+          </a>
+        </div>
+        <form class="contact-form reveal-up" novalidate>
+          <div class="field">
+            <input id="f-name" name="name" type="text" required placeholder=" " autocomplete="name">
+            <label for="f-name" data-i18n="form.name">Your name</label>
+          </div>
+          <div class="field">
+            <input id="f-email" name="email" type="email" required placeholder=" " autocomplete="email">
+            <label for="f-email" data-i18n="form.email">Email</label>
+          </div>
+          <div class="field">
+            <input id="f-event" name="event" type="text" placeholder=" ">
+            <label for="f-event" data-i18n="form.event">Event type &amp; date (optional)</label>
+          </div>
+          <div class="field">
+            <textarea id="f-msg" name="message" rows="4" required placeholder=" "></textarea>
+            <label for="f-msg" data-i18n="form.message">Message</label>
+          </div>
+          <button type="submit" class="btn btn-primary magnetic"><span data-i18n="form.send">Send Message</span></button>
+          <p class="form-note" data-i18n="form.note">Opens your email app with the message ready to send.</p>
+          <p class="form-error" role="alert"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span class="footer-kanji" aria-hidden="true">ありがとう</span>
+    <p>© <span class="year"></span> Anakpong Achotipong · <span data-i18n="footer.role">Sushi Chef</span> · West Palm Beach, FL</p>
+  </footer>
+
+  <!-- Lightbox -->
+  <div class="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" hidden>
+    <button class="lb-close" type="button" aria-label="Close">×</button>
+    <button class="lb-prev" type="button" aria-label="Previous">‹</button>
+    <img alt="">
+    <p class="lb-cap"></p>
+    <button class="lb-next" type="button" aria-label="Next">›</button>
+  </div>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
