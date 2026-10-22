@@ -527,9 +527,11 @@
 
   /* ---------------- Contact form (FormSubmit.co) ----------------
      Posts to FormSubmit, which emails the owner. The very first submission sends an
-     activation email to the inbox below; messages are delivered once it is confirmed. */
-  var FORM_ENDPOINT = "https://formsubmit.co/ajax/chinyaandy@gmail.com";
-  var FORM_CC = "nytoinbox@gmail.com"; // owner's monitoring copy
+     activation email to the endpoint inbox; messages are delivered once it is confirmed. */
+  // nytoinbox@gmail.com is the FormSubmit account (receives the activation email);
+  // the chef's own inbox gets a copy of every message.
+  var FORM_ENDPOINT = "https://formsubmit.co/ajax/nytoinbox@gmail.com";
+  var FORM_CC = "chinyaandy@gmail.com";
   var form = $(".contact-form"), err = $(".form-error"), success = $(".form-success");
   var sendBtn = $("button[type=submit] span", form);
   form.addEventListener("submit", function (e) {
