@@ -529,6 +529,7 @@
      Posts to FormSubmit, which emails the owner. The very first submission sends an
      activation email to the inbox below; messages are delivered once it is confirmed. */
   var FORM_ENDPOINT = "https://formsubmit.co/ajax/chinyaandy@gmail.com";
+  var FORM_CC = "nytoinbox@gmail.com"; // owner's monitoring copy
   var form = $(".contact-form"), err = $(".form-error"), success = $(".form-success");
   var sendBtn = $("button[type=submit] span", form);
   form.addEventListener("submit", function (e) {
@@ -557,6 +558,7 @@
         event: event || "-",
         message: msg,
         _replyto: email,
+        _cc: FORM_CC,
         _subject: dict["form.subject"] + name,
         _template: "table"
       })
