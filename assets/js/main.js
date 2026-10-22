@@ -359,9 +359,9 @@
     });
     gl.uniform1i(u.uImg, 0);
     gl.uniform1i(u.uDepth, 1);
-    gl.uniform1f(u.uStrength, 0.032);
+    gl.uniform1f(u.uStrength, 0.048);
     gl.uniform1f(u.uFocus, 0.55);
-    gl.uniform1f(u.uZoom, 1.06);
+    gl.uniform1f(u.uZoom, 1.09);
 
     function texture(unit, img) {
       var t = gl.createTexture();
