@@ -67,8 +67,9 @@ Strip EXIF metadata from new photos (re-save with Pillow) so no GPS data is publ
 
 ## Behaviour notes
 
-- Contact form posts JSON to FormSubmit (`https://formsubmit.co/ajax/nytoinbox@gmail.com`, `FORM_ENDPOINT` in `main.js`); a copy goes to the chef at `chinyaandy@gmail.com` via `_cc` (`FORM_CC`; FormSubmit has no BCC). Visitor's address is set as reply-to. Free, no account.
-  - The first submission triggers an activation email to nytoinbox@gmail.com (owner's choice); nothing is delivered until it is confirmed.
+- Contact form posts JSON to FormSubmit (`https://formsubmit.co/ajax/nytoinbox@hotmail.com`, `FORM_ENDPOINT` in `main.js`); copies go to `chinyaandy@gmail.com` and `nytoinbox@gmail.com` via `_cc` (`FORM_CC`; FormSubmit has no BCC). Visitor's address is set as reply-to. Free, no account.
+  - The first submission triggers an activation email to nytoinbox@hotmail.com (owner's choice; the activation email never arrived at nytoinbox@gmail.com); nothing is delivered until it is confirmed.
+  - If activation keeps failing, the fallback plan is Web3Forms (access key) plus Gmail forwarding for the copy.
   - Hidden `_honey` field filters bots. On failure the form shows the email address as a fallback.
   - After activation FormSubmit offers a random alias to replace the address in the endpoint, if the owner wants it hidden from page source.
 - `prefers-reduced-motion` disables the loader, particles, cursor effects and most transitions.
