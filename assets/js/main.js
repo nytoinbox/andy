@@ -528,10 +528,10 @@
   /* ---------------- Contact form (FormSubmit.co) ----------------
      Posts to FormSubmit, which emails the owner. The very first submission sends an
      activation email to the endpoint inbox; messages are delivered once it is confirmed. */
-  // nytoinbox@hotmail.com is the FormSubmit account (receives the activation email;
-  // FormSubmit's activation mail never reached Gmail). The chef and the owner's Gmail
-  // get a copy of every message.
-  var FORM_ENDPOINT = "https://formsubmit.co/ajax/nytoinbox@hotmail.com";
+  // The endpoint uses FormSubmit's alias for the activated inbox (see CLAUDE.md), so that
+  // address is not exposed in the page source. The chef and the owner's Gmail get a copy
+  // of every message.
+  var FORM_ENDPOINT = "https://formsubmit.co/ajax/dee52742b53d7d418066059ce9ef9480";
   var FORM_CC = "chinyaandy@gmail.com,nytoinbox@gmail.com";
   var form = $(".contact-form"), err = $(".form-error"), success = $(".form-success");
   var sendBtn = $("button[type=submit] span", form);
